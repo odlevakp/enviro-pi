@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Enviro-π</title>
+    <script src='/static/menu.js'></script>
+    <link rel="stylesheet" href='/static/style.css' />
+</head>
+
+<body>
+    <ul class="topnav" id="myTopnav">
+        <li><a href="/">Status</a></li>
+        <li><a href="/charts">Charts</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="TopMenuFunction()">☰</a>
+        </li>
+    </ul>
+    <div style="padding-left:16px">
+        <h1>About</h1>
+        <p style="text-align:center;">
+          <b>Enviro-π weather station</b><br />
+          Copyright 2016 Pavol Odlevak<br />
+          Licensed under the Apache License, Version 2.0<br /><br />
+          Using <a href="http://www.chartjs.org/">Chart.js</a> and <a href="http://momentjs.com/">Moment.js</a> available under the MIT license.
+        </p>
+        <table style="overflow-x:auto;">
+            <tr>
+                <td>OS version</td>
+                <td>{{os_version}}</td>
+            </tr>
+            <tr>
+                <td>Python version</td>
+                <td>{{python_version}}</td>
+            </tr>
+            <tr>
+                <td>SenseHat version</td>
+                <td>{{sensehat_version}}</td>
+            </tr>
+            <tr>
+                <td>Flask version</td>
+                <td>{{flask_version}}</td>
+        </table>
+        <p style="text-align:center;">
+            <a href="https://www.raspberrypi.org/">
+                <img src="/static/raspberry_pi_logo.png" alt="HTML tutorial" style="width:160px;height:200px;border:0;vertical-align:middle;float:middle">
+            </a>
+        </p><br />
+        <sub>Raspberry Pi and Raspberry Pi logo are trademarks of the Raspberry Pi Foundation.</sub>
+    </div>
+
+
+</body>
+
+</html>

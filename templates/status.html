@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Enviro-π</title>
+    <script src='static/menu.js'></script>
+    <link rel="stylesheet" href='/static/style.css' />
+</head>
+
+<body>
+    <ul class="topnav" id="myTopnav">
+        <li><a href="/">Status</a></li>
+        <li><a href="/charts">Charts</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="TopMenuFunction()">☰</a>
+        </li>
+    </ul>
+    <div style="padding-left:16px">
+        <h1>Status</h1>
+        <p>Last refresh at <span id='date'></span></p>
+        <input type="button" class="button status" value="Refresh Page" onClick="window.location.reload()">
+
+        <table style="overflow-x:auto;">
+            <caption></caption>
+            <tr>
+                <th>Temperature</th>
+            </tr>
+            <tr>
+                <td>
+                    <font size="25">{{temperature_from_humidity}} °C</font>
+                </td>
+            </tr>
+            <tr>
+                <th>Humidity</th>
+            </tr>
+            <tr>
+                <td>
+                    <font size="25">{{humidity}} %</font>
+                </td>
+            </tr>
+            <tr>
+                <th>Pressure</th>
+            </tr>
+            <tr>
+                <td>
+                    <font size="25">{{pressure}} hPa</font>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <br><br>Your average in-home humidity should be between 30-50% percent, ideally close to 45%.<br><br>Suggested room temperature in winter should be between 20°C to 23.5°C and summer 23°C to 25.5°C.
+        </p>
+    </div>
+    <script>
+        var d = new Date();
+        document.getElementById("date").innerHTML = d;
+    </script>
+</body>
+
+</html>

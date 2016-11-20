@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Enviro-π</title>
+    <script src='static/menu.js'></script>
+    <link rel="stylesheet" href='/static/style.css' />
+</head>
+
+<body>
+    <ul class="topnav" id="myTopnav">
+        <li><a href="/">Status</a></li>
+        <li><a href="/charts">Charts</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="TopMenuFunction()">☰</a>
+        </li>
+    </ul>
+    <div style="padding-left:16px">
+        <h1>Statistics for {{header_timespan}}</h1><br>
+        <form method="post">
+            <select class="styled-select" name="timespan_select">
+              <option {% if selected_timespan == 'day' %}selected{% endif %} value="day">Last 24 hours</option>
+              <option {% if selected_timespan == 'week' %}selected{% endif %} value="week">Last 7 days</option>
+              <option {% if selected_timespan == 'month' %}selected{% endif %} value="month">Last 30 days</option>
+            </select>
+            <input type="submit" class="button stats" value="Load Statistics">
+        </form>
+        <table style="overflow-x:auto;">
+            <caption></caption>
+            <tr>
+                <th>Sensor</th>
+                <th>Average</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+            </tr>
+            <tr>
+                <td>Temperature</td>
+                <td>{{avg_temp_hum}}</td>
+                <td>{{min_temp_hum}}</td>
+                <td>{{max_temp_hum}}</td>
+            </tr>
+            <tr>
+                <td>Humidity</td>
+                <td>{{avg_humidity}}</td>
+                <td>{{min_humidity}}</td>
+                <td>{{max_humidity}}</td>
+            </tr>
+            <tr>
+                <td>Pressure</td>
+                <td>{{avg_pressure}}</td>
+                <td>{{min_pressure}}</td>
+                <td>{{max_pressure}}</td>
+            </tr>
+        </table>
+        <br><br>
+        <p>
+            Your average in-home humidity should be between 30-50% percent, ideally close to 45%.<br><br> Suggested room temperature in winter should be between 20°C to 23.5°C and summer 23°C to 25.5°C.
+        </p>
+    </div>
+</body>
+
+</html>

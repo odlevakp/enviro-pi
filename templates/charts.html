@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Enviro-π</title>
+    <script src='static/moment.min.js'></script>
+    <script src='static/Chart.min.js'></script>
+    <script src='static/menu.js'></script>
+    <link rel="stylesheet" href='/static/style.css' />
+</head>
+
+<body>
+    <ul class="topnav" id="myTopnav">
+        <li><a href="/">Status</a></li>
+        <li><a href="/charts">Charts</a></li>
+        <li><a href="/statistics">Statistics</a></li>
+        <li><a href="/about">About</a></li>
+        <li class="icon">
+            <a href="javascript:void(0);" style="font-size:15px;" onclick="TopMenuFunction()">☰</a>
+        </li>
+    </ul>
+
+    <div style="padding-left:16px">
+        <h1>Charts for {{header_timespan}}</h1>
+        <p>Last refresh at <span id='date'></span></p>
+
+        <form method="post">
+            <select class="styled-select" name="timespan_select">
+         <option {% if selected_timespan == 'day' %}selected{% endif %} value="day">Last 24 hours</option>
+         <option {% if selected_timespan == 'week' %}selected{% endif %} value="week">Last 7 days</option>
+         <option {% if selected_timespan == 'month' %}selected{% endif %} value="month">Last 30 days</option>
+       </select>
+            <input type="submit" class="button chart" value="Load Charts">
+        </form>
+    </div>
+    <h3 style="padding-left:16px">Humidity for {{header_timespan}}</h3>
+    <canvas id="HumidityChart" width="800" height="480"></canvas>
+    <h3 style="padding-left:16px">Temperature for {{header_timespan}}</h3>
+    <canvas id="TemperatureChart" width="800" height="480"></canvas>
+    <h3 style="padding-left:16px">Pressure for {{header_timespan}}</h3>
+    <canvas id="PressureChart" width="800" height="480"></canvas>
+    <script>
+        var d = new Date();
+        document.getElementById("date").innerHTML = d;
+
+        var chartOptions = {
+            responsive: true,
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        displayFormats: {
+                            minute: 'dddd HH:mm',
+                            hour: 'dddd HH:mm',
+                            day: 'HH:mm Do MMM YYYY',
+                            month: 'Do MMM YYYY'
+                        }
+                    }
+                }]
+            }
+        }
+
+        var temperatureData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "Tepmerature (°C)",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(255,102,102,0.4)",
+                borderColor: "rgba(255,102,102,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(255,102,102,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(255,102,102,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in temp_hum %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+
+        var pressureData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "Atmospheric pressure (hPa)",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(0,128,255,0.4)",
+                borderColor: "rgba(0,128,255,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(0,128,255,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(0,128,255,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in pressure %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+        var humidityData = {
+            labels: [{% for item in labels %}"{{item}}",{% endfor %}],
+            datasets: [{
+                label: "humidity (%RH)",
+                fill: false,
+                lineTension: 0.1,
+                backgroundColor: "rgba(0,204,0,0.4)",
+                borderColor: "rgba(0,204,0,1)",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "rgba(0,204,0,1)",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "rgba(0,204,0,1)",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: [{% for item in humidity %}{{item}},{% endfor %}],
+                spanGaps: false,
+            }]
+        };
+        var ctxTemperature = document.getElementById("TemperatureChart");
+        var myLineChart = Chart.Line(ctxTemperature, {
+            data: temperatureData,
+            options: chartOptions
+        });
+
+        var ctxHumidity = document.getElementById("HumidityChart");
+        var myLineChart = Chart.Line(ctxHumidity, {
+            data: humidityData,
+            options: chartOptions
+        });
+
+        var ctxPressure = document.getElementById("PressureChart");
+        var myLineChart = Chart.Line(ctxPressure, {
+            data: pressureData,
+            options: chartOptions
+        });
+    </script>
+</body>
+
+</html>
