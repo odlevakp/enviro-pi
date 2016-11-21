@@ -63,10 +63,9 @@ You should see both processes running and good to go. Open you browser on `PI_IP
 
 
 ### Screenshots
-
-<img src="http://files.phisolutions.eu/status.png" alt="Drawing" style="width: 400px;"/> <img src="http://files.phisolutions.eu/charts.png" alt="Drawing" style="width: 400px;"/>
-
-<img src="http://files.phisolutions.eu/statistics.png" alt="Drawing" style="width: 800px;"/>
+![Status MacOS screenshot](http://files.phisolutions.eu/status.png "Status MacOS screenshot")
+![Charts MacOS screenshot](http://files.phisolutions.eu/charts.png "Charts MacOS screenshot")
+![Statistics Android screenshot](http://files.phisolutions.eu/statistics.png "Statistics Android screenshot")
 
 
 ### Playing with database
