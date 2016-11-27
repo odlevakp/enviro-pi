@@ -19,7 +19,7 @@ inaccurate due to the heat coming from it - that's what the optional ribbon cabl
 
 ![SenseHat Ribbon Cable](http://files.phisolutions.eu/enviro-pi-hw1.jpg "SenseHat with Ribbon Cable")
 
-To use your SenseHat with the ribbon cable, you can remove the GPIO header on the bottom of the hat. It won't go easy the first time, just remember, you are removing the bottom one ;-)
+To use your SenseHat with a ribbon cable, you can remove the GPIO header on the bottom of the hat. It won't go easy the first time, just remember, you are removing the bottom one ;-)
 
 The application was inspired by following resources:
 

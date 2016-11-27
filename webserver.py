@@ -12,6 +12,15 @@ from flask import send_from_directory
 # Just a helper variable.
 SECONDS_IN_DAY = 86400
 
+INFO_MESSAGE = '''
+<br><br>
+Your average in-home relative humidity should be between 40-60% RH percent,
+ideally close to 45-50% RH.
+<br><br>
+Suggested room temperature in winter should be between 20 °C to 23.5 °C and
+summer 23 °C to 25.5 °C.
+'''
+
 # Info for /about requests.
 OS_VERSION = ' '.join(platform.linux_distribution())
 PYTHON_VERSION = platform.python_version()
@@ -140,7 +149,7 @@ def show_statistics():
     cur = db.execute(query)
     row = cur.fetchone()
     min_humidity = str(round(row["min_humidity"], 1)) + \
-        "% at " + row["min_humidity_datetime"]
+        "% RH at " + row["min_humidity_datetime"]
 
     query = """
         SELECT MAX(humidity) as max_humidity,
@@ -152,7 +161,7 @@ def show_statistics():
     cur = db.execute(query)
     row = cur.fetchone()
     max_humidity = str(round(row["max_humidity"], 1)) + \
-        "% at " + row["max_humidity_datetime"]
+        "% RH at " + row["max_humidity_datetime"]
 
     query = """
         SELECT AVG(humidity) as avg_humidity
@@ -162,7 +171,7 @@ def show_statistics():
         """ % options[selected_timespan][0]
     cur = db.execute(query)
     row = cur.fetchone()
-    avg_humidity = str(round(row["avg_humidity"], 1)) + "%"
+    avg_humidity = str(round(row["avg_humidity"], 1)) + "% RH"
 
     query = """
         SELECT MIN(pressure) as min_pressure,
@@ -208,7 +217,7 @@ def show_statistics():
     cur = db.execute(query)
     row = cur.fetchone()
     min_temp_hum = str(round(row["min_temp_hum"], 1)) + \
-        "°C at " + row["min_temp_hum_datetime"]
+        " °C at " + row["min_temp_hum_datetime"]
 
     query = """
         SELECT MAX(temp_hum) as max_temp_hum,
@@ -220,7 +229,7 @@ def show_statistics():
     cur = db.execute(query)
     row = cur.fetchone()
     max_temp_hum = str(round(row["max_temp_hum"], 1)) + \
-        "°C at " + row["max_temp_hum_datetime"]
+        " °C at " + row["max_temp_hum_datetime"]
 
     query = """
         SELECT AVG(temp_hum) as avg_temp_hum
@@ -230,9 +239,10 @@ def show_statistics():
         """ % options[selected_timespan][0]
     cur = db.execute(query)
     row = cur.fetchone()
-    avg_temp_hum = str(round(row["avg_temp_hum"], 1)) + "°C"
+    avg_temp_hum = str(round(row["avg_temp_hum"], 1)) + " °C"
 
     return render_template('statistics.html',
+                           info=INFO_MESSAGE,
                            selected_timespan=selected_timespan,
                            header_timespan=options[selected_timespan][1],
                            min_humidity=min_humidity,
@@ -263,11 +273,9 @@ def index():
     temperature_from_humidity = round(sense.get_temperature(), 1)
     temperature_from_pressure = round(sense.get_temperature_from_pressure(), 1)
 
-    data = {'live_humidity': humidity,
-            'live_pressure': humidity,
-            'live_temperature_from_humidity': pressure}
-
-    return render_template('status.html', humidity=humidity, pressure=pressure, temperature_from_humidity=temperature_from_humidity)
+    return render_template('status.html', info=INFO_MESSAGE,
+                            humidity=humidity, pressure=pressure,
+                            temperature_from_humidity=temperature_from_humidity)
 
 
 if __name__ == '__main__':
